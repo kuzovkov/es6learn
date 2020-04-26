@@ -8,6 +8,8 @@ services:
     volumes:
       - ./app:/usr/src/env/app
       - ./data:/data
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     dns: 8.8.8.8
     ports:
       - "8020:80"

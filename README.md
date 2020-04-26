@@ -5,11 +5,17 @@ sudo docker-compose exec app bash
 cd app/public/es6
 npm install
 
+if got error "One CLI for webpack must be installed. These are recommended choices, delivered as separate packages:
+               - webpack-cli (https://github.com/webpack/webpack-cli)
+                 The original webpack full-featured CLI.
+"
+npm install -g webpack-cli
+
 npm init
 
 webpack
 
-if get error "compilation.mainTemplate.applyPluginsWaterfall is not a function"
+if got error "compilation.mainTemplate.applyPluginsWaterfall is not a function"
 npm i --save-dev html-webpack-plugin@
 
 ```
