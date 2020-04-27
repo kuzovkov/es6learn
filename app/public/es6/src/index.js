@@ -318,3 +318,104 @@ console.log(map4, map4.size);
 key8 = null;
 console.log(map4, map4.size);
 console.log(map4, map4.size);
+
+
+//Модули
+import * as extra from './modules/extra';
+console.log(extra);
+
+import {header, count} from './modules/extra2';
+console.log(header, count);
+
+import {name as name3} from './modules/extra';
+console.log(name3);
+
+import * as extra3 from './modules/extra3';
+console.log(extra3);
+
+import {myfunc} from './modules/func';
+myfunc();
+
+import myfuncdef from './modules/func2';
+myfuncdef();
+
+import Boy from './modules/boy';
+let boy = new Boy('Игорь');
+console.log(boy.getName());
+
+//Символы
+
+let s = Symbol('RTYU');
+console.log(typeof(s), s);
+let s2 = Symbol('1');
+let s3 = Symbol('1');
+console.log(s2 === s3);
+
+let s4 = Symbol('field');
+let s5 = Symbol('field');
+
+let obj7 = {[s4]: 'RTYU'};
+console.log(obj7);
+console.log(obj7['field']);
+console.log(obj7[s5]);
+console.log(obj7[s4]);
+
+
+let obj8 = {[s4]: 'RTYU', age: 34};
+console.log(Object.getOwnPropertyNames(obj8));
+console.log(Object.getOwnPropertySymbols(obj8));
+
+let num = 1;
+let str = 'RTYU';
+let arr1 = [1,3,6,7];
+let obj = {'eyr': 15632};
+
+console.log('number: ', typeof(num[Symbol.iterator]));
+console.log('string: ', typeof(str[Symbol.iterator]));
+console.log('array: ', typeof(arr1[Symbol.iterator]));
+console.log('object: ', typeof(obj[Symbol.iterator]));
+//eсли не undefined то применим цикл for(let item of items)
+//создание итератора
+
+function createIterator(arr){
+    let count = 0;
+    return {
+        next(){
+            return count < arr.length ?
+            {value: arr[count++], done: false}
+            :
+            {value: undefined, done: true};
+        }
+    };
+}
+
+let iter = createIterator([1,2,3,4,5,6]);
+console.log(iter.next());
+console.log(iter.next());
+console.log(iter.next());
+console.log(iter.next());
+console.log(iter.next());
+console.log(iter.next());
+console.log(iter.next());
+console.log(iter.next());
+console.log(iter.next());
+
+//генерация ряда Фиббоначи
+let fib  = {
+    [Symbol.iterator](){
+        let pre = 0, cur = 1;
+        return {
+            next() {
+                [pre, cur] = [cur, pre+cur];
+                return {value: cur, done: false};
+            }
+        };
+    }
+};
+
+for (let n of fib){
+    if (n > 1500)
+        break;
+    console.log(n);
+}
+
