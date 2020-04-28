@@ -15,7 +15,25 @@ npm init
 
 webpack
 
-if got error "compilation.mainTemplate.applyPluginsWaterfall is not a function"
+#if got error "compilation.mainTemplate.applyPluginsWaterfall is not a function"
 npm i --save-dev html-webpack-plugin@
 
+#for use Generators
+
+npm install --save-dev babel-plugin-transform-runtime
+
 ```
+
+add file `.babelrc` to root directory (там где package.json)
+
+```json
+{
+  "plugins": [
+    ["transform-runtime", {
+      "polyfill": false,
+      "regenerator": true
+    }]
+  ]
+}
+```
+

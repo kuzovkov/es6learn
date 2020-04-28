@@ -1,5 +1,5 @@
-//let вместо var
-//let ивдна только внутри скобок
+/**let вместо var **/
+//let видна только внутри скобок
 
 for (let i = 0; i < 5; i++) {
     setTimeout(function () {
@@ -10,7 +10,7 @@ for (let i = 0; i < 5; i++) {
 const PI = 3.14;
 let a = 1;
 
-//стрелочные функции
+/** стрелочные функции **/
 const arrow = () => {
     return 150;
 }
@@ -42,7 +42,7 @@ let obj2 = {
 obj1.logName();
 obj2.logName();
 
-//параметры по умолчанию
+/** параметры по умолчанию **/
 
 const func = (a) => {
     a = a || 15;
@@ -77,7 +77,7 @@ const func5 = (a=20, b=a+c2()) => {
 
 console.log('func5:', func5(60));
 
-//объекты
+/** объекты **/
 
 const name = 'ERT';
 const age = 23;
@@ -105,7 +105,7 @@ console.log(person, person.getJob());
 const person2 = createPerson('David', 'Norton', 'bla', '-bla');
 console.log(person2);
 
-//Деструктуризация
+/** Деструктуризация **/
 
 let obj4 = {
     title: 'ERT',
@@ -125,7 +125,7 @@ console.log(x,y,z);
 let [x1,,x3] = array;
 console.log(x1,x3);
 
-//Rest и Spread операторы
+/** Rest и Spread операторы **/
 
 function logStrings(num){
     var args = Array.prototype.slice.call(arguments);
@@ -144,7 +144,7 @@ logStrings2(10, 'line1', 'line2', 'line3');
 let spreadArray = [ 'line1', 'line2', 'line3', 'line4', 'line5'];
 logStrings2(10, ...spreadArray);
 
-//Строки
+/** Строки **/
 
 let name2 = 'ETY';
 let str2 = `Hello ${name2}, glat to see you`;
@@ -165,7 +165,7 @@ let html = `
 
 console.log(html);
 
-//Циклы
+/** Циклы **/
 
 const  arr = [1,2,3,4,5];
 
@@ -186,7 +186,7 @@ for (let item of 'QWERTY'){
     console.log(`item: ${item}`);
 };
 
-//Классы
+/** Классы **/
 /* старый синтаксис
 function Car(name){
     this.name = name;
@@ -231,7 +231,7 @@ Car.funcStat();
 let bmw = new BMW('x6');
 bmw.logName();
 
-//Set и WeakSet
+/** Set и WeakSet **/
 
 let set  = new Set();
 set.add(10);
@@ -266,7 +266,7 @@ console.log(set5, set5.size);
 key2 = null;
 console.log(set5, set5.size);
 
-//Map и WeakMap
+/** Map и WeakMap **/
 
 let map = new Map();
 map.set('key1', 123);
@@ -320,7 +320,7 @@ console.log(map4, map4.size);
 console.log(map4, map4.size);
 
 
-//Модули
+/** Модули **/
 import * as extra from './modules/extra';
 console.log(extra);
 
@@ -343,7 +343,7 @@ import Boy from './modules/boy';
 let boy = new Boy('Игорь');
 console.log(boy.getName());
 
-//Символы
+/** Символы **/
 
 let s = Symbol('RTYU');
 console.log(typeof(s), s);
@@ -419,3 +419,105 @@ for (let n of fib){
     console.log(n);
 }
 
+/** Генераторы **/
+
+function* gen (){
+    yield 11;
+    yield 22;
+    yield 33;
+}
+
+let iter2 = gen();
+console.log(iter2.next());
+console.log(iter2.next());
+console.log(iter2.next());
+console.log(iter2.next());
+
+//вызов генератора внутри генератора
+function* g1(){
+    yield 1;
+    yield* g2();
+    yield 4;
+}
+
+function* g2(){
+    yield 2;
+    yield 3;
+}
+
+let iter3 = g1();
+console.log(iter3.next());
+console.log(iter3.next());
+console.log(iter3.next());
+console.log(iter3.next());
+console.log(iter3.next());
+console.log(iter3.next());
+
+function* g3(){
+    yield* [1,2,3,4,5];
+}
+let iter4 = g3();
+console.log(iter4.next());
+console.log(iter4.next());
+console.log(iter4.next());
+console.log(iter4.next());
+console.log(iter4.next());
+console.log(iter4.next());
+console.log(iter4.next());
+console.log(iter4.next());
+
+
+//пример использования
+function* getRange(start=0, end=100, step=1){
+    while (start < end){
+        yield start;
+        start += step;
+    }
+}
+
+for (let n of getRange(10, 25)){
+    console.log('n=', n);
+}
+
+let fibGen = {
+    *[Symbol.iterator](){
+        let pre = 0, cur = 1;
+        for (;;){
+            [pre, cur] = [cur, pre+cur];
+            yield cur;
+        }
+    }
+};
+
+for (let n of fibGen){
+    if (n > 1500)
+        break;
+    console.log('fib(i)=', n);
+}
+//если в генераторе используются асинхронные функции, то они будут работать последовательно,
+// пока один yield не завершится следующий не будет выдаваться
+
+
+/**Новые методы**/
+
+let obj10 = {a: 1};
+let obj9 = {b: 2, c: 3};
+
+Object.assign(obj10, obj9);
+console.log('obj10: ', obj10);
+console.log('obj9: ', obj9);
+
+let obj11 = Object.assign({d: 4}, obj10, obj9);
+console.log('obj11: ', obj11);
+
+let findElem = [1,2,3,4].find(x => x >2 ); //возвращает первый найденный элемент
+console.log(findElem);
+
+let str10 = 'Hello!';
+console.log('Reapeat: ', str10.repeat(3));
+console.log('startsWith: ', str10.startsWith('He'));
+console.log('startsWith: ', str10.startsWith('He', 1));
+console.log('startsWith: ', str10.startsWith('el', 1));
+console.log('includes: ', str10.includes('llo'));
+
+//Promise
