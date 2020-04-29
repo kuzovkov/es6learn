@@ -520,4 +520,96 @@ console.log('startsWith: ', str10.startsWith('He', 1));
 console.log('startsWith: ', str10.startsWith('el', 1));
 console.log('includes: ', str10.includes('llo'));
 
-//Promise
+/** Promise **/
+
+function oldDelay(ms, func) {
+    setTimeout(function () {
+        func();
+    }, ms)
+}
+
+oldDelay(3000, function () {
+   console.log('oldDelay func passed!');
+});
+
+function delay(ms=1000) {
+    return new Promise((resolve, reject)=>{
+        setTimeout(()=>{
+            resolve();
+            //reject();
+        }, ms);
+    });
+}
+
+delay(4000).then(()=>{
+    console.log('New delay passed!');
+}).catch(()=>{
+    console.info('error');
+});
+
+import $ from 'jquery';
+
+let promise = new Promise((resolve, reject) => {
+    $.ajax({
+        url: 'http://date.jsontest.com/',
+        dataType: 'json',
+        success: function (res) {
+            resolve(res);
+        },
+        error: function (error) {
+            reject(error);
+        }
+    });
+});
+
+promise.then((res) => {
+    console.log('success ', res);
+    return res.date;
+}).
+then((date)=> {
+    console.log('date ', date)
+})
+.catch((err) => {
+    console.info('error ', err);
+});
+
+function httpGet(url) {
+    return new Promise(function(resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.onload = function() {
+            if (this.status == 200) {
+                resolve(this.response);
+            } else {
+                var error = new Error(this.statusText);
+                error.code = this.status;
+                reject(error);
+            }
+        };
+        xhr.onerror = function() {
+            reject(new Error("Network Error"));
+        };
+        xhr.send();
+    });
+}
+
+var url = 'https://chat2.kuzovkov12.ru/test-file.txt';
+httpGet(url)
+    .then(
+        (response) => {console.log(`Fulfilled: ${response}`)}
+    ).catch(error => console.log(`Rejected: ${error}`));
+
+import Rect from './modules/rect';
+
+httpGet('https://chat2.kuzovkov12.ru/test-file.txt')
+    .then(response => { var res=JSON.parse(response); var r3 = new Rect(res.x, res.y); return r3.square();})
+    .catch(e => console.log(e))
+    .then( r => {console.log(r); return httpGet('https://chat2.kuzovkov12.ru/test-file2.txt')})
+    .then(response => { var res=JSON.parse(response); var r3 = new Rect(res.x, res.y); return r3.square();})
+    .catch(e => console.log(e))
+    .then(r => {console.log(r); return httpGet('https://chat2.kuzovkov12.ru/test-file3.txt')})
+    .then(response => { var res=JSON.parse(response); var r3 = new Rect(res.x, res.y); return r3.square();})
+    .catch(e => console.log(e));
+
+
+

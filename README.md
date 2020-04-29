@@ -17,12 +17,13 @@ webpack
 
 #if got error "compilation.mainTemplate.applyPluginsWaterfall is not a function"
 npm i --save-dev html-webpack-plugin@
+```
 
 #for use Generators
-
+```bash
 npm install --save-dev babel-plugin-transform-runtime
-
 ```
+
 
 add file `.babelrc` to root directory (там где package.json)
 
@@ -35,5 +36,11 @@ add file `.babelrc` to root directory (там где package.json)
     }]
   ]
 }
+```
+
+#for use jQuery
+ 
+```bash
+npm install jquery
 ```
 
